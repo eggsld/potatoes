@@ -70,6 +70,11 @@ table#movies th, table#movies td {
 tr:hover {
   background: wheat;
 }
+
+table#movies th.hilite {
+  background-color: yellow;
+}
+
 #notice, #warning {
   background: rosybrown;
   margin: 1em 0;

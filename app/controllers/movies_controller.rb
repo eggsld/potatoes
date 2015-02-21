@@ -1,4 +1,10 @@
 class MoviesController < ApplicationController
+ 
+   def movie_ratings
+    Movie.select(:rating).uniq.map(&:rating)
+    #Movie.select('distinct rating').map(&:ratng)
+  end
+  
   def index
   @all_ratings = movie_ratings
   @selected_ratings = params[:ratings] || session[:ratings] || {}
@@ -22,16 +28,10 @@ class MoviesController < ApplicationController
     return redirect_to :sort => sort, :ratings => @selected_ratings
   end
   @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
- end
-
-
- def movie_ratings
-  Movie .select(:rating).uniq.map(&:rating)
-#Movie.select('distinct rating').map(&:ratng)
   end
 
-
-def search_tmdb
+  
+  def search_tmdb
   # hardwire to simulate failure
   flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
   redirect_to movies_path
@@ -54,9 +54,6 @@ end
 def new
 # default: render 'new' template
 end
-
-
-
 
 
 def create
