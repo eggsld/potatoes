@@ -1,5 +1,7 @@
 Potatoes::Application.routes.draw do
   resources :movies
+# Route that posts 'Search TMDb' form
+  post '/movies/search_tmdb'
   root :to => redirect('/movies')
 
 # The priority is based upon order of creation:

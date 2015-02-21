@@ -1,10 +1,43 @@
-# This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
   def index
-# @movies = Movie.all
- @movies = Movie.find(:all, :order => 'title')
-#  @movies = Movie.all.sort_by {|item| item.title}
+  @all_ratings = movie_ratings
+  @selected_ratings = params[:ratings] || session[:ratings] || {}
+  sort = params[:sort] || session[:sort]
+  case sort
+    when 'title'
+      ordering = {:order => :title}
+      @title_header = 'hilite'
+    when 'release_date'
+      ordering = {:order => :release_date}
+      @date_header = 'hilite'
   end
+  if @selected_ratings == {}
+    @selected_ratings = Hash[@all_ratings.map {|rating| [rating,rating]}]
+  end
+ 
+  if session[:sort] != params[:sort] or session[:ratings] != params[:ratings]
+    session[:sort] = sort
+    session[:ratings] = @selected_ratings
+    flash.keep
+    return redirect_to :sort => sort, :ratings => @selected_ratings
+  end
+  @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
+ end
+
+
+ def movie_ratings
+  Movie .select(:rating).uniq.map(&:rating)
+#Movie.select('distinct rating').map(&:ratng)
+  end
+
+
+def search_tmdb
+  # hardwire to simulate failure
+  flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
+  redirect_to movies_path
+end
+
+
 
   def show
   id = params[:id] # retrieve movie ID from URI route
@@ -15,9 +48,16 @@ class MoviesController < ApplicationController
   # will render app/views/movies/show.html.haml by default
 end
 
+
+
+
 def new
 # default: render 'new' template
 end
+
+
+
+
 
 def create
   #debugger
