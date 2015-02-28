@@ -8,13 +8,14 @@ gem 'rails', '3.2.18'
 
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
-  gem 'sqlite3'
+  gem 'pg'
+  #  gem 'sqlite3'
   gem 'debugger'
 end
 
 
 group :production do
-  gem 'pg'
+#  gem 'pg'
 end
 
 # Gems used only for assets and not required
