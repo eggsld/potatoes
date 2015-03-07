@@ -1,0 +1,16 @@
+%h2 The Movie Database results
+
+%table#movies
+  %thead
+    %tr
+      %th Movie Title
+      %th Release Date
+      %th Description
+  %tbody
+    - @movies.each do |movie|
+      %tr
+        %td= link_to movie.title,movie_path(movie.title, :from => 'tmdb', :title => movie.title)
+        %td= movie.release_date
+        %td= movie.overview
+
+= link_to 'Back to movie list', movies_path
