@@ -35,19 +35,26 @@ class MoviesController < ApplicationController
 
   
   def search_tmdb
-  # hardwire to simulate failure
-  flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
-  redirect_to movies_path
-end
-
-
+    @movies = Movie.find_in_tmdb(params[:search_terms])
+    #@movies.each do |m|
+    if @movies.empty?
+      flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
+      return redirect_to movies_path
+    end
+  end
 
   def show
-  id = params[:id] # retrieve movie ID from URI route
-  @movie = Movie.find(id) # look up movie by unique IDi
-  rescue ActiveRecord::RecordNotFound
-    flash[:notice] = "Movie ID ##{id} not found!"
-    redirect_to :action => 'index' #movies_path
+    id = params[:id] # retrieve movie ID from URI route
+    if params[:from] == "tmdb"
+  #    debugger
+   #   @movie.write_attribute(:title => "#{params[:title]}")
+      
+    else
+      @movie = Movie.find(id) # look up movie by unique IDi
+    end  
+    rescue ActiveRecord::RecordNotFound
+        flash[:notice] = "Movie ID ##{id} not found!"
+        redirect_to :action => 'index' #movies_path
   # will render app/views/movies/show.html.haml by default
 end
 

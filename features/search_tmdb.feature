@@ -20,6 +20,17 @@ Scenario: Try to add existing movie (happy path)
  
   When I fill in "Search Terms" with "Inception"
   And I press "Search TMDb"
-  Then I should be on the "Search Results" page
-  And I should not see "not found"
+  Then I should be on the Search Results page
+  #  And I should not see "not found"
   And I should see "Inception"
+  And I follow "Back to movie list"
+  And I should be on the RottenPotatoes home page
+
+  Scenario: Try to show details of a movie from TMDB
+    When I fill in "Search Terms" with "Robocop"
+    And I press "Search TMDb"
+    Then I should be on the Search Results page
+    And I should see "Robocop"
+    And I follow "Robocop"
+    Then I should be on the Show Movie page
+ 

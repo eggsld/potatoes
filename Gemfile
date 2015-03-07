@@ -11,6 +11,14 @@ group :development, :test do
   gem 'pg'
   #  gem 'sqlite3'
   gem 'debugger'
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'ZenTest'
+  gem 'launchy'
+  gem 'rest-open-uri'
 end
 
 
@@ -30,16 +38,12 @@ end
 gem 'jquery-rails'
 gem 'haml'
 
+gem 'ruby-tmdb3'
 # Use unicorn as the web server
 # gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
 
-group :test, :development do
-  gem 'cucumber-rails'
-  gem 'cucumber-rails-training-wheels'
-  gem 'database_cleaner'
-  gem 'capybara'
-  gem 'launchy'
-end
+#group :test, :development do
+#end
