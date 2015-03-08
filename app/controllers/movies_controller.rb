@@ -35,8 +35,9 @@ class MoviesController < ApplicationController
 
   
   def search_tmdb
-    @movies = Movie.find_in_tmdb(params[:search_terms])
-    
+   # @movies = Movie.find_in_tmdb(params[:search_terms])
+    @movies = Tmdb::Movie.find(params[:search_terms])
+#debugger
     if @movies.empty?
       flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
       return redirect_to movies_path
@@ -45,15 +46,17 @@ class MoviesController < ApplicationController
 
   def show
     if params[:from] == "tmdb"
-      @movie = Movie.new
-      @movie.id = params[:id]
-      @movie.title = params[:title]
-      @movie.rating = params[:rating]
-      @movie.release_date = params[:release_date]
-      @movie.description = params[:overview]
+      @movie_temp = Tmdb::Movie.detail(params[:tmdb_id])
 
+      @movie = Movie.new
+      @movie.id = @movie_temp["id"]
+      @movie.title = @movie_temp["title"]
+      @movie.rating = @movie_temp["vote_average"]
+      @movie.release_date = @movie_temp["release_date"]
+      @movie.description = @movie_temp["overview"]
+      @movie.poster_path = @movie_temp["poster_path"]
     else
-      @movie = Movie.find(id) # look up movie by unique IDi
+      @movie = Movie.find params[:id] # look up movie by unique IDi
     end  
     rescue ActiveRecord::RecordNotFound
         flash[:notice] = "Movie ID ##{id} not found!"

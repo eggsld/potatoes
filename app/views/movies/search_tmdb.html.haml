@@ -3,14 +3,16 @@
 %table#movies
   %thead
     %tr
+      %th Poster
       %th Movie Title
       %th Release Date
-      %th Description
+      %th Rating
   %tbody
     - @movies.each do |movie|
       %tr
-        %td= link_to movie.title,movie_path(movie.title, from: 'tmdb', title: movie.title, rating: movie.rating, release_date: movie.release_date ,overview: movie.overview, rating: movie.certification)
+        %td= image_tag("#{@configuration.base_url}w92#{movie.poster_path}") if movie.poster_path
+        %td= link_to movie.title,movie_path(movie.title, from: 'tmdb', tmdb_id: movie.id)
         %td= movie.release_date
-        %td= movie.overview
+        %td= movie.vote_average
 
 = link_to 'Back to movie list', movies_path

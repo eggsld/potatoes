@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20150201195710) do
     t.string   "rating"
     t.text     "description"
     t.datetime "release_date"
+    t.string   "poster_path"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

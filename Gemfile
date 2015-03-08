@@ -38,7 +38,8 @@ end
 gem 'jquery-rails'
 gem 'haml'
 
-gem 'ruby-tmdb3'
+#gem 'ruby-tmdb3'
+gem 'themoviedb'
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -2,6 +2,8 @@
 
 %h2 Details about #{@movie.title}
 
+= image_tag("#{@configuration.base_url}w154#{@movie.poster_path}") if @movie.poster_path
+
 %ul#details
   %li
     Rating:
