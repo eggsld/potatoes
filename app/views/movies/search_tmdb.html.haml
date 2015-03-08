@@ -9,7 +9,7 @@
   %tbody
     - @movies.each do |movie|
       %tr
-        %td= link_to movie.title,movie_path(movie.title, :from => 'tmdb', :title => movie.title)
+        %td= link_to movie.title,movie_path(movie.title, from: 'tmdb', title: movie.title, rating: movie.rating, release_date: movie.release_date ,overview: movie.overview, rating: movie.certification)
         %td= movie.release_date
         %td= movie.overview
 

@@ -1,5 +1,11 @@
 class Movie < ActiveRecord::Base
-
+  
+  def after_initialize(title, rating, description, release_date)
+    @title = title
+    @rating = rating
+    @description = description
+    @release_date = release_date
+  end
   class Movie::InvalidKeyError < StandardError ; end
  
   def self.api_key
@@ -23,5 +29,6 @@ class Movie < ActiveRecord::Base
   end
 
   attr_accessible :title, :rating, :description, :release_date
+
 
 end

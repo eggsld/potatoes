@@ -36,7 +36,7 @@ class MoviesController < ApplicationController
   
   def search_tmdb
     @movies = Movie.find_in_tmdb(params[:search_terms])
-    #@movies.each do |m|
+    
     if @movies.empty?
       flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
       return redirect_to movies_path
@@ -44,11 +44,14 @@ class MoviesController < ApplicationController
   end
 
   def show
-    id = params[:id] # retrieve movie ID from URI route
     if params[:from] == "tmdb"
-  #    debugger
-   #   @movie.write_attribute(:title => "#{params[:title]}")
-      
+      @movie = Movie.new
+      @movie.id = params[:id]
+      @movie.title = params[:title]
+      @movie.rating = params[:rating]
+      @movie.release_date = params[:release_date]
+      @movie.description = params[:overview]
+
     else
       @movie = Movie.find(id) # look up movie by unique IDi
     end  
